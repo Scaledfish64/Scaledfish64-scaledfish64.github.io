@@ -5,17 +5,24 @@ let lastMouseY = 0;
 let mouseSpeedX = 0;
 let mouseSpeedY = 0;
 
-console.log("Yo! I'm Tharun Thangavel, but you'll probaly see me as Scaledfish64. High School Hacker at Cumberland Valley, if it can be opened, I'll do it!")
-console.log("Just know if you found this, you're awesome!")
-console.log("And I may or may not have done this for free boba ;)")
-
-document.addEventListener('mousemove', (event) => {
+function trackMouseMove(event) {
     mouseSpeedX = event.pageX - lastMouseX;
     mouseSpeedY = event.pageY - lastMouseY;
 
     lastMouseX = event.pageX;
     lastMouseY = event.pageY;
-});
+}
+
+function trackTouchMove(event) {
+    const touch = event.touches[0]; 
+    if (!touch) return; 
+
+    mouseSpeedX = touch.pageX - lastMouseX;
+    mouseSpeedY = touch.pageY - lastMouseY;
+
+    lastMouseX = touch.pageX;
+    lastMouseY = touch.pageY;
+}
 
 function swishSingleLetter(event) {
     const letter = event.target;
@@ -26,7 +33,17 @@ function swishSingleLetter(event) {
     const translateY = mouseSpeedY * scaleFactor;
 
     letter.style.transform = `translate(${translateX}px, ${translateY}px)`;
-    letter.style.transition = "transform 4s ease-out";
+    letter.style.transition = "transform 4s ease-out"; 
+}
+
+if ('ontouchstart' in window) {
+    document.addEventListener('touchmove', trackTouchMove, { passive: true });
+    document.addEventListener('touchstart', (event) => {
+        lastMouseX = event.touches[0].pageX;
+        lastMouseY = event.touches[0].pageY;
+    });
+} else {
+    document.addEventListener('mousemove', trackMouseMove);
 }
 
 letters.forEach(letter => {
