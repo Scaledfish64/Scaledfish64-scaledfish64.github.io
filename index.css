@@ -1,0 +1,22 @@
+.swish-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+}
+
+.swish-letter {
+    display: inline-block;
+    font-variant: none;
+    letter-spacing: 0;
+    margin: 0; 
+    padding: 0;
+    transition: transform 0.2s ease-out;
+}
+
+body{
+    background-color: #603101;
+    overflow: hidden;
+    height: 100%; 
+}
